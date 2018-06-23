@@ -1,0 +1,15 @@
+{
+  "name": "secure-npmrc-docker",
+  "version": "1.0.0",
+  "description": "Example repo to demonstrate how to use .npmrc files securely in Docker images",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Alexandra Ulsh",
+  "license": "MIT",
+  "dependencies": {
+    "@alulsh/private-package": "^1.0.0",
+    "express": "^4.16.3"
+  }
+}

@@ -1,0 +1,12 @@
+FROM node:8.11.3-alpine
+ARG NPM_TOKEN
+
+WORKDIR /private-app
+COPY . /private-app
+
+RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+RUN npm install
+
+EXPOSE 3000
+
+CMD ["node","index.js"]

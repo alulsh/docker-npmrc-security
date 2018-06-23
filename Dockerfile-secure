@@ -1,0 +1,19 @@
+# First build
+FROM node:8.11.3-alpine AS build
+ARG NPM_TOKEN
+
+WORKDIR /private-app
+COPY . /private-app
+
+RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc && \
+    npm install --production && \
+    rm -f .npmrc
+
+# Second build
+FROM node:8.11.3-alpine
+WORKDIR /private-app
+
+EXPOSE 3000
+COPY --from=build /private-app /private-app
+
+CMD ["node","index.js"]
