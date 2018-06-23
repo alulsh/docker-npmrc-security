@@ -1,5 +1,5 @@
 {
-  "name": "secure-npmrc-docker",
+  "name": "docker-npmrc-security",
   "version": "1.0.0",
   "description": "Example repo to demonstrate how to use .npmrc files securely in Docker images",
   "main": "index.js",
