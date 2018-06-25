@@ -47,7 +47,7 @@ The `.npmrc` file is never deleted from this image. The `.npmrc` file is on the 
 1. Run `ls -al`. You should see an `.npmrc` file in the `/private-app` directory.
 1. Run `cat .npmrc`.
 
-### #2 - Leaving .npmrc files in Docker intermediate images
+### #2 - Leaving `.npmrc` files in Docker intermediate images
 
 [`Dockerfile-insecure-2`](https://github.com/alulsh/docker-npmrc-security/blob/master/Dockerfile-insecure-2)
 
