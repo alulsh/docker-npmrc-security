@@ -1,4 +1,5 @@
 *.md
 Dockerfile*
 .dockerignore
+.git
 node_modules
