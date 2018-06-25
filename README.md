@@ -104,6 +104,6 @@ The `.npmrc` file is created, used, and deleted in the same `RUN` instruction an
 
 To build this image, run `docker build . -f Dockerfile-secure -t secure-app --build-arg NPM_TOKEN=$NPM_TOKEN`.
 
-This `Dockerfile` uses [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/#use-an-external-image-as-a-stage) to protect our `.npmrc` file. In the first stage build we create our `.npmrc`, run `npm install`, and delete our `.npmrc`. We then copy over our built Node application to our second stage build. We can use the same base image - `node:8.11.3-alpine` - for both stages of our build.
+This `Dockerfile` uses [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/#use-an-external-image-as-a-stage) to protect our `.npmrc` file. In the first stage build, we create our `.npmrc`, run `npm install`, and delete our `.npmrc`. We then copy over our built Node application to our second stage build. We can use the same base image - `node:8.11.3-alpine` - for both stages of our build.
 
 To verify that this Docker image does not leak our npm tokens, run `docker history secure-app`.
