@@ -1,6 +1,6 @@
 # Docker images and .npmrc security
 
-This is a companion repo to a blog post I'm writing about Docker images and `.npmrc` security. I'll update this README once I publish the blog post.
+This is a companion repo with code samples for https://www.alexandraulsh.com/2018/06/25/docker-npmrc-security/, a blog post I wrote about using `.npmrc` files securely in Docker images.
 
 ## Setup
 
