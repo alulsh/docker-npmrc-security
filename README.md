@@ -20,7 +20,7 @@ To build these example Docker images you'll need git, Node.js, npm, an npm accou
 
 ### Docker
 
-[Download the version of Docker CE](https://docs.docker.com/install/) for your operating system.
+[Download the version of Docker CE](https://docs.docker.com/install/) for your operating system. The BuildKit mode `--secret` flag requires Docker 18.09 and later.
 
 ## Insecure Dockerfiles
 
@@ -100,10 +100,20 @@ The `.npmrc` file is created, used, and deleted in the same `RUN` instruction an
 
 ### Multi-stage builds
 
-[`Dockerfile-secure`](https://github.com/alulsh/docker-npmrc-security/blob/master/Dockerfile-secure)
+[`Dockerfile-secure-multistage`](https://github.com/alulsh/docker-npmrc-security/blob/master/Dockerfile-secure-multistage)
 
-To build this image, run `docker build . -f Dockerfile-secure -t secure-app --build-arg NPM_TOKEN=$NPM_TOKEN`.
+To build this image, run `docker build . -f Dockerfile-secure-multistage -t secure-app-multistage --build-arg NPM_TOKEN=$NPM_TOKEN`.
 
 This `Dockerfile` uses [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/#use-an-external-image-as-a-stage) to protect our `.npmrc` file. In the first stage build, we create our `.npmrc`, run `npm install`, and delete our `.npmrc`. We then copy over our built Node application to our second stage build. We can use the same base image - `node:8.11.3-alpine` - for both stages of our build.
 
-To verify that this Docker image does not leak our npm tokens, run `docker history secure-app`.
+To verify that this Docker image does not leak our npm tokens, run `docker history secure-app-multistage`.
+
+### Experimental BuildKit mode `--secret` flag
+
+[`Dockerfile-secure-secrets`](https://github.com/alulsh/docker-npmrc-security/blob/master/Dockerfile-secure-secrets)
+
+To build this image, run `DOCKER_BUILDKIT=1 docker build . -f Dockerfile-secure-secrets -t secure-app-secrets --secret id=npm,src=$HOME/.npmrc`. You can also run `export DOCKER_BUILDKIT=1` to enable BuildKit, then run `docker build . -f Dockerfile-secure-secrets -t secure-app-secrets --secret id=npm,src=$HOME/.npmrc`.
+
+This `Dockerfile` uses the [`--secret` flag for `docker build`](https://docs.docker.com/develop/develop-images/build_enhancements/#new-docker-build-secret-information) released with [Docker 18.09](https://docs.docker.com/engine/release-notes/#18090). It uses the experimental [`RUN --mount=type=secret` syntax](https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/experimental.md#run---mounttypesecret) from [the experimental Docker frontend for BuildKit](https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/experimental.md#use-experimental-dockerfile-frontend). [This Docker CLI pull request](https://github.com/docker/cli/pull/1288) added support for `--secret` to `docker build` in August 2018.
+
+To verify that this Docker image does not leak our npm tokens, run `docker history secure-app-secrets`.
